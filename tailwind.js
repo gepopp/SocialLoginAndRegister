@@ -4,10 +4,16 @@ module.exports = {
         enabled: true,
         content: [
             './**/*.php',
-            './**/*.js'
+            './dist/**/*.js'
         ]
     },
-    theme: {},
+    theme: {
+        extend : {
+            colors : {
+                'linkedin' : '#0e76a8'
+            }
+        }
+    },
     variants: {},
     plugins: [],
 }
