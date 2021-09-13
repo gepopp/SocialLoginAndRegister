@@ -4,6 +4,7 @@
 namespace SocialLoginAndRegisterClasses;
 
 
+use SocialLoginAndRegisterClasses\LinkedIn\Login;
 use SocialLoginAndRegisterClasses\LinkedIn\LinkedInAuthorizationURL;
 
 class RewriteRules {
@@ -20,7 +21,7 @@ class RewriteRules {
 		$linkedInURL = $linkedin_authorization_url->get_redirect_path();
 
 		if(str_starts_with($_SERVER["REQUEST_URI"], '/' . $linkedInURL)) {
-
+			new Login();
 			exit();
 		}
 

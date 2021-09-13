@@ -111,6 +111,23 @@ class AdminSettingsPage {
 			]
 		);
 
+		add_settings_field(
+			'linkedin_auto_inject',
+			__('Add to Login form', 'slar'),
+			[
+				$this,
+				'SLAR_client_id_checkbox',
+			],
+			'SLAR_settings_page',
+			'SLAR_general_settings_section',
+			[
+				'type'        => 'checkbox',
+				'name'        => 'linkedin_auto_inject',
+				'label' => __('Place LinkedIn button at the end of Login forms.', 'sarl'),
+			]
+		);
+
+
 
 		register_setting(
 			'SLAR_general_settings',
@@ -120,6 +137,21 @@ class AdminSettingsPage {
 
 	public function SLAR_settings_section_content() {
 	} // end sandbox_general_options_callback
+
+
+    public function SLAR_client_id_checkbox($args){
+
+	    $options = get_option( 'SLAR_general_settings' );
+	    $value = isset($options[$args['name']]) ? $options[$args['name']] : 0;
+	    ?>
+            <input id="<?php echo $args['name'] ?>"
+                   type="checkbox"
+                   name="SLAR_general_settings[<?php echo $args['name'] ?>]"
+                   value="1"
+                <?php checked($value, 1, true) ?>>
+            <label><?php echo $args['label'] ?></label>
+        <?php
+    }
 
 
 	public function SLAR_client_id_input( $args ) {

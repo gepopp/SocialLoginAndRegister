@@ -10,6 +10,7 @@ class Enqueue {
 	public function __construct() {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'SLAR_enqueue_styles' ] );
+		add_action( 'login_enqueue_scripts', [ $this, 'SLAR_enqueue_styles' ] );
 
 	}
 
