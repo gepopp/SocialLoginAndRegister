@@ -1,8 +1,10 @@
 <?php
 
-
 namespace SocialLoginAndRegisterClasses\LinkedIn;
+
+use SocialLoginAndRegisterClasses\Session;
 use SocialLoginAndRegisterClasses\Constants;
+
 
 class LinkedInAuthorizationURL {
 
@@ -13,6 +15,7 @@ class LinkedInAuthorizationURL {
 	public function __construct() {
 
 		$this->redirectUrl = home_url( $this->get_redirect_path() );
+		new Session();
 
 	}
 

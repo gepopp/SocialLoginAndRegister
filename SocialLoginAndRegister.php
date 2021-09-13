@@ -3,7 +3,7 @@
  * Plugin Name:       Social Login and Register
  * Plugin URI:        https://poppgerhard.at
  * Description:       Login Via LinkedIn, Google and Facebook.
- * Version:           0.0.1
+ * Version:           0.0.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Popp Gerhard
