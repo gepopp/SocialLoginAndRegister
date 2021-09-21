@@ -37,7 +37,7 @@ class LinkedInAuthorizationURL {
 
 		$state = [
 			'nonce'    => wp_create_nonce( 'linkedinoauth' ),
-			'redirect' => $redirect,
+			'redirect' => empty($redirect) ? $this->get_current_url() : $redirect,
 			'action'   => $action
 		];
 
@@ -66,6 +66,12 @@ class LinkedInAuthorizationURL {
 		$state = sanitize_text_field($_GET['state']);
 		return json_decode(base64_decode($state));
 
+	}
+
+
+	public function get_current_url(){
+		global $wp;
+		return home_url( $wp->request );
 	}
 
 }

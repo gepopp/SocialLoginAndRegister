@@ -51,7 +51,6 @@ class Token {
 		if ( ! is_wp_error( $request ) ) {
 			return json_decode(wp_remote_retrieve_body( $request ));
 		}
-
 	}
 
 }
