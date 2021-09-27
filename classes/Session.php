@@ -55,8 +55,10 @@ class Session {
 
 	public function sarl_update( $id, $content = [] ) {
 
+		$content = maybe_serialize($content);
+
 		$this->wpdb->update( $this->tablename, [
-			'content' => maybe_serialize($content),
+			'content' => $content,
 		],
 			[ 'session_id' => $id ]
 		);

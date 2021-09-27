@@ -20,6 +20,8 @@ class LinkedInAuthorizationURL {
 	}
 
 
+
+
 	public function authorziation_url($redirect = '', $action = '' ) : string {
 
 		return add_query_arg( [
@@ -33,17 +35,24 @@ class LinkedInAuthorizationURL {
 	}
 
 
+
+
+
+
 	public function create_state($redirect = '', $action = '') : string {
 
 		$state = [
 			'nonce'    => wp_create_nonce( 'linkedinoauth' ),
-			'redirect' => empty($redirect) ? $this->get_current_url() : $redirect,
+			'redirect' => empty($redirect) ? wp_get_referer() : $redirect,
 			'action'   => $action
 		];
 
 		return base64_encode(json_encode($state));
-
 	}
+
+
+
+
 
 	/**
 	 * @return string|void
@@ -51,6 +60,9 @@ class LinkedInAuthorizationURL {
 	public function get_redirect_url(): string {
 		return $this->redirectUrl;
 	}
+
+
+
 
 	/**
 	 *
@@ -60,6 +72,9 @@ class LinkedInAuthorizationURL {
 		$options = get_option(Constants::SLAR_GENERAL_SETTING);
 		return empty( $options['linkedin_redirect_url'] ) ? 'linkedinoauth' : $options['linkedin_redirect_url'];
 	}
+
+
+
 
 	public function decode_state(){
 

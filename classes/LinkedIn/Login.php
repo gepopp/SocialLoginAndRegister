@@ -32,6 +32,8 @@ class Login {
 	}
 
 
+
+
 	public function try_to_login(){
 
 		$user = get_user_by('email', $this->profile['email']);
@@ -40,14 +42,18 @@ class Login {
 		wp_set_current_user($user->ID);
 		wp_set_auth_cookie($user->ID);
 		do_action('wp_login', null, $user);
-		wp_safe_redirect(home_url());
+		wp_safe_redirect($this->state->redirect);
 		exit;
 
 
 	}
 
 
+
+
+
 	public function handle_errors(){
+
 
 		$session = new Session();
 
@@ -71,6 +77,8 @@ class Login {
 			wp_safe_redirect($this->state->redirect);
 			exit;
 		}
+
+
 
 	}
 

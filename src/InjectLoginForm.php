@@ -4,7 +4,7 @@ add_action( 'login_form', function () {
     new \SocialLoginAndRegisterClasses\Session();
 
 	$options = get_option( \SocialLoginAndRegisterClasses\Constants::SLAR_GENERAL_SETTING );
-	if ( $options['linkedin_auto_inject'] ) {
+	if ( $options['linkedin_auto_inject'] ?? false ) {
 		ob_start();
 		?>
         <div class="w-full py-10">
