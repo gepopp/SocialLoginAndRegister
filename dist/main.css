@@ -542,6 +542,11 @@ video {
   position: static;
 }
 
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -559,10 +564,6 @@ video {
   background-color: rgba(14, 118, 168, var(--tw-bg-opacity));
 }
 
-.p-5 {
-  padding: 1.25rem;
-}
-
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -577,9 +578,24 @@ video {
   text-align: center;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgba(185, 28, 28, var(--tw-text-opacity));
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgba(127, 29, 29, var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {

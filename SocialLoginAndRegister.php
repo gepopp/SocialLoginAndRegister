@@ -17,8 +17,8 @@
 
 namespace SocialLoginAndRegister;
 
-
 use SocialLoginAndRegisterClasses\Tables;
+use SocialLoginAndRegisterClasses\Session;
 
 if ( ! function_exists( 'get_plugin_data' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -38,3 +38,7 @@ $loader->addPsr4( 'SocialLoginAndRegisterClasses\\', __DIR__ . '/classes' );
 \A7\autoload( __DIR__ . '/shortcodes' );
 
 register_activation_hook( __FILE__ . '', [ new Tables(), 'CreateAndUpdateTables' ] );
+
+if(!session_id()) {
+	session_start();
+}

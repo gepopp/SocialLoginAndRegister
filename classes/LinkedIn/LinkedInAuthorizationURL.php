@@ -2,7 +2,6 @@
 
 namespace SocialLoginAndRegisterClasses\LinkedIn;
 
-use SocialLoginAndRegisterClasses\Session;
 use SocialLoginAndRegisterClasses\Constants;
 
 
@@ -13,10 +12,7 @@ class LinkedInAuthorizationURL {
 
 
 	public function __construct() {
-
 		$this->redirectUrl = home_url( $this->get_redirect_path() );
-		new Session();
-
 	}
 
 
@@ -41,9 +37,12 @@ class LinkedInAuthorizationURL {
 
 	public function create_state($redirect = '', $action = '') : string {
 
+		global $wp;
+
 		$state = [
 			'nonce'    => wp_create_nonce( 'linkedinoauth' ),
 			'redirect' => empty($redirect) ? wp_get_referer() : $redirect,
+			'loginpage'=> home_url($wp->request),
 			'action'   => $action
 		];
 
