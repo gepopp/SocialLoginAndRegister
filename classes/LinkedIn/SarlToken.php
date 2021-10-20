@@ -4,19 +4,19 @@
 namespace SocialLoginAndRegisterClasses\LinkedIn;
 
 
-use SocialLoginAndRegisterClasses\Tables;
-use SocialLoginAndRegisterClasses\Constants;
+use SocialLoginAndRegisterClasses\SarlTables;
+use SocialLoginAndRegisterClasses\SarlConstants;
 
-class Token {
+class SarlToken {
 
 	private $token_url = "https://www.linkedin.com/oauth/v2/accessToken";
 
 
-	public function save_token( $token, $profile ) {
+	public function sarl_save_token( $token, $profile ) {
 
 		global $wpdb;
-		$wpdb->delete($wpdb->prefix . Tables::TOKENS_TABLE, ['email' => $profile['email']]);
-		$wpdb->insert( $wpdb->prefix . Tables::TOKENS_TABLE, [
+		$wpdb->delete( $wpdb->prefix . SarlTables::TOKENS_TABLE, [ 'email' => $profile['email']]);
+		$wpdb->insert( $wpdb->prefix . SarlTables::TOKENS_TABLE, [
 			'plattform'    => 'linkedin',
 			'plattform_id' => $profile['id'],
 			'email'        => $profile['email'],
@@ -28,16 +28,16 @@ class Token {
 	}
 
 
-	public function obtain_token() {
+	public function sarl_obtain_token() {
 
-		$authorization = new LinkedInAuthorizationURL();
+		$authorization = new SarlLinkedInAuthorizationURL();
 
 		$url = add_query_arg( [
 			'grant_type'    => 'authorization_code',
 			'code'          => $_GET['code'],
-			'client_id'     => Constants::get_client_id(),
-			'client_secret' => Constants::get_client_secret(),
-			'redirect_uri'  => $authorization->get_redirect_url(),
+			'client_id'     => SarlConstants::sarl_get_client_id(),
+			'client_secret' => SarlConstants::sarl_get_client_secret(),
+			'redirect_uri'  => $authorization->sarl_get_redirect_url(),
 		], $this->token_url );
 
 

@@ -4,14 +4,14 @@
 namespace SocialLoginAndRegisterClasses;
 
 
-class Tables {
+class SarlTables {
 
 	const TOKENS_TABLE  = 'sarl_oauth_tokens';
 	const SHARES_TABLE  = 'sarl_shares';
 	const SESSION_TABLE = 'sarl_session';
 
 
-	public function CreateAndUpdateTables() {
+	public function sarl_create_update_tables() {
 
 
 		$installed_ver = get_option( "linkedinoauthversion" );
@@ -28,6 +28,7 @@ class Tables {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$table_name = $wpdb->prefix . self::SESSION_TABLE;
+
 		$sql        = "CREATE TABLE $table_name (
 		id BIGINT NOT NULL AUTO_INCREMENT,
 		session_id VARCHAR(255) NOT NULL,
@@ -39,6 +40,7 @@ class Tables {
 
 
 		$table_name = $wpdb->prefix . self::TOKENS_TABLE;
+
 		$sql        = "CREATE TABLE $table_name (
 		id BIGINT NOT NULL AUTO_INCREMENT,
 		plattform VARCHAR(255) NOT NULL,

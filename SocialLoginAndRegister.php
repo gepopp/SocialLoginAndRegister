@@ -17,8 +17,7 @@
 
 namespace SocialLoginAndRegister;
 
-use SocialLoginAndRegisterClasses\Tables;
-use SocialLoginAndRegisterClasses\Session;
+use SocialLoginAndRegisterClasses\SarlTables;
 
 if ( ! function_exists( 'get_plugin_data' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -30,6 +29,7 @@ define( 'SocialLoginAndRegister_VERSION', $plugindata['Version'] );
 define( 'SocialLoginAndRegister_DIR', __DIR__ );
 define( 'SocialLoginAndRegister_FILE', __FILE__ );
 define( 'SocialLoginAndRegister_URL', plugin_dir_url( __FILE__ ) );
+define( 'SocialLoginAndRegister_DOMAIN', $plugindata['TextDomain'] );
 
 $loader = require_once( SocialLoginAndRegister_DIR . '/vendor/autoload.php' );
 $loader->addPsr4( 'SocialLoginAndRegisterClasses\\', __DIR__ . '/classes' );
@@ -37,8 +37,8 @@ $loader->addPsr4( 'SocialLoginAndRegisterClasses\\', __DIR__ . '/classes' );
 \A7\autoload( __DIR__ . '/src' );
 \A7\autoload( __DIR__ . '/shortcodes' );
 
-register_activation_hook( __FILE__ . '', [ new Tables(), 'CreateAndUpdateTables' ] );
+register_activation_hook( __FILE__ . '', [ new SarlTables(), 'sarl_create_update_tables' ] );
 
-if(!session_id()) {
+if ( ! session_id() ) {
 	session_start();
 }

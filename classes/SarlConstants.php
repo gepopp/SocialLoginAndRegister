@@ -4,7 +4,7 @@
 namespace SocialLoginAndRegisterClasses;
 
 
-class Constants {
+class SarlConstants {
 
 	const SLAR_GENERAL_SETTING = 'SLAR_general_settings';
 
@@ -17,11 +17,11 @@ class Constants {
 	CONST SLAR_LINKEDIN_SCHARING_SCOPE = 'w_member_social';
 
 
-	public static function get_client_id() : string {
+	public static function sarl_get_client_id() : string {
 		if(defined('LINKEDIN_CLIENT_ID')){
 			return LINKEDIN_CLIENT_ID;
 		}else{
-			$options = get_option(Constants::SLAR_GENERAL_SETTING);
+			$options = get_option(SarlConstants::SLAR_GENERAL_SETTING);
 			if(isset($options['linkedin_client_id'])){
 				return $options['linkedin_client_id'];
 			}
@@ -30,11 +30,11 @@ class Constants {
 		return false;
 	}
 
-	public static function get_client_secret() : string {
+	public static function sarl_get_client_secret() : string {
 		if(defined('LINKEDIN_CLIENT_SECRET')){
 			return LINKEDIN_CLIENT_SECRET;
 		}else{
-			$options = get_option(Constants::SLAR_GENERAL_SETTING);
+			$options = get_option(SarlConstants::SLAR_GENERAL_SETTING);
 			if(isset($options['linkedin_client_secret'])){
 				return $options['linkedin_client_secret'];
 			}

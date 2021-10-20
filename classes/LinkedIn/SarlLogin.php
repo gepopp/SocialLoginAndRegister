@@ -4,9 +4,9 @@
 namespace SocialLoginAndRegisterClasses\LinkedIn;
 
 
-use SocialLoginAndRegisterClasses\Session;
+use SocialLoginAndRegisterClasses\SarlSession;
 
-class Login {
+class SarlLogin {
 
 
 	private $token;
@@ -15,35 +15,44 @@ class Login {
 
 	private $state;
 
-	private Session $session;
+	private SarlSession $session;
 
 	public function __construct() {
 
-		$this->session = Session::sarl_session_get_instance();
+		$this->session = SarlSession::sarl_session_get_instance();
 
-		$this->state = ( new LinkedInAuthorizationURL() )->decode_state();
-		$this->handle_errors();
+		$this->state = ( new SarlLinkedInAuthorizationURL() )->sarl_decode_state();
 
-		$token       = new Token();
-		$this->token = $token->obtain_token();
+		$this->sarl_handle_errors();
 
-		$this->get_profile();
-		$this->get_email_addresse();
+		$token       = new SarlToken();
+		$this->token = $token->sarl_obtain_token();
 
-		$token->save_token( $this->token, $this->profile );
+		$this->sarl_get_profile();
+		$this->sarl_get_email_address();
 
-		$this->try_to_login();
+		$token->sarl_save_token( $this->token, $this->profile );
+
+		$this->sarl_try_to_login();
 	}
 
 
-	public function try_to_login() {
+	public function sarl_try_to_login() {
 
 		$user = get_user_by( 'email', $this->profile['email'] );
+
+		if ( ! $user ) {
+			$this->session->sarl_session_add( 'errors', 'This E-Mail Adress is not registered.' );
+			wp_safe_redirect( $this->state->loginpage );
+			exit;
+		}
 
 		wp_clear_auth_cookie();
 		wp_set_current_user( $user->ID );
 		wp_set_auth_cookie( $user->ID );
+
 		do_action( 'wp_login', null, $user );
+
 		wp_safe_redirect( $this->state->redirect );
 		exit;
 
@@ -51,18 +60,18 @@ class Login {
 	}
 
 
-	public function handle_errors() {
+	public function sarl_handle_errors() {
 
 
 		if ( ! wp_verify_nonce( $this->state->nonce, 'linkedinoauth' ) ) {
-			$this->session->sarl_session_add( 'errors', 'Vorgang wegen Spamschutz abgebrochen.' );
+			$this->session->sarl_session_add( 'errors', __( 'Spamprotection, could not login.', SocialLoginAndRegister_DOMAIN ) );
 			wp_safe_redirect( $this->state->loginpage );
 			exit;
 		}
 
 
 		if ( isset( $_GET['error'] ) || isset( $_GET['error_description'] ) ) {
-			$this->session->sarl_session_add( 'errors', 'Sie haben den Vorgang abgebrochen' );
+			$this->session->sarl_session_add( 'errors', __( 'You have canceled the login.', SocialLoginAndRegister_DOMAIN ) );
 			wp_safe_redirect( $this->state->loginpage );
 			exit;
 		}
@@ -71,7 +80,10 @@ class Login {
 	}
 
 
-	public function get_profile() {
+
+
+
+	public function sarl_get_profile() {
 
 		$request = wp_remote_get( 'https://api.linkedin.com/v2/me', [
 			'headers' => [
@@ -87,11 +99,14 @@ class Login {
 				'firstname' => $profile->localizedFirstName,
 				'id'        => $profile->id,
 			];
+		}else{
+			wp_die('hier');
 		}
 	}
 
 
-	public function get_email_addresse() {
+	public function sarl_get_email_address() {
+
 		$request = wp_remote_get( 'https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))', [
 			'headers' => [
 				'Authorization' => 'Bearer ' . $this->token->access_token,

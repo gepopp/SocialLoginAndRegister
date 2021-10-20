@@ -1,6 +1,6 @@
 <?php
 add_action( 'login_form', function () {
-	$options = get_option( \SocialLoginAndRegisterClasses\Constants::SLAR_GENERAL_SETTING );
+	$options = get_option( \SocialLoginAndRegisterClasses\SarlConstants::SLAR_GENERAL_SETTING );
 	if ( $options['linkedin_auto_inject'] ?? false ) {
 		ob_start();
 		?>

@@ -4,7 +4,7 @@
 namespace SocialLoginAndRegisterClasses;
 
 
-class Session {
+class SarlSession {
 
 
 	const COOKIENAME = 'PHPSESSID';
@@ -20,14 +20,13 @@ class Session {
 	private static $instance = null;
 
 
-	private function __construct() {
-	}
+	private function __construct() {}
 
 
 	public static function sarl_session_get_instance() {
 
 		if ( self::$instance == null ) {
-			self::$instance = new Session();
+			self::$instance = new SarlSession();
 			self::$instance->sarl_session_setup();
 		}
 
@@ -50,7 +49,7 @@ class Session {
 
 		global $wpdb;
 		$this->wpdb      = $wpdb;
-		$this->tablename = $wpdb->prefix . Tables::SESSION_TABLE;
+		$this->tablename = $wpdb->prefix . SarlTables::SESSION_TABLE;
 
 		$this->sarl_session_load();
 
