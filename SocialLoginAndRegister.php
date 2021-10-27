@@ -39,6 +39,9 @@ $loader->addPsr4( 'SocialLoginAndRegisterClasses\\', __DIR__ . '/classes' );
 
 register_activation_hook( __FILE__ . '', [ new SarlTables(), 'sarl_create_update_tables' ] );
 
-if ( ! session_id() ) {
-	session_start();
-}
+
+add_action('init', function (){
+	if ( ! session_id() ) {
+		session_start();
+	}
+});

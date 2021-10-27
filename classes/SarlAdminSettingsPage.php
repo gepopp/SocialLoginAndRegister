@@ -126,6 +126,53 @@ class SarlAdminSettingsPage {
 			]
 		);
 
+		add_settings_field(
+			'linkedin_share',
+			__( 'Activate sharing in users name', SocialLoginAndRegister_DOMAIN ),
+			[
+				$this,
+				'sarl_client_id_checkbox',
+			],
+			'SLAR_settings_page',
+			'SLAR_general_settings_section',
+			[
+				'type'  => 'checkbox',
+				'name'  => 'linkedin_share',
+				'label' => __( 'Enables sharing button on posts to let user share in their name.', SocialLoginAndRegister_DOMAIN ),
+			]
+		);
+
+		add_settings_field(
+			'linkedin_share_content_button',
+			__( 'Place LinkedIn Share button', SocialLoginAndRegister_DOMAIN ),
+			[
+				$this,
+				'sarl_client_radio',
+			],
+			'SLAR_settings_page',
+			'SLAR_general_settings_section',
+			[
+				'type'    => 'radio',
+				'name'    => 'linkedin_share_button_placement',
+                'nullable'=> true,
+				'label'   => __( 'Places a share button before or after the content of an post.', SocialLoginAndRegister_DOMAIN ),
+				'options' => [
+					[
+						'name'  => 'before_content',
+						'label' => __( 'Place button before content' ),
+					],
+					[
+						'name'  => 'after_content',
+						'label' => __( 'Place button after content' ),
+					],
+					[
+						'name'  => 'before_after_content',
+						'label' => __( 'Place button before and after content' ),
+					],
+				],
+			]
+		);
+
 
 		register_setting(
 			'SLAR_general_settings',
@@ -134,6 +181,35 @@ class SarlAdminSettingsPage {
 	}
 
 	public function sarl_settings_section_content() {
+	}
+
+
+	public function sarl_client_radio( $args ) {
+
+		$options = get_option( 'SLAR_general_settings' );
+
+        if($args['nullable'] ?? false){
+            ?>
+            <div>
+                <label>
+                    <input type="radio" name="SLAR_general_settings[<?php echo $args['name'] ?>]" value="0" <?php checked($options[$args['name']] ?? 0, 0, true) ?>>
+                    <?php _e('Please select', SocialLoginAndRegister_DOMAIN) ?>
+                </label>
+            </div>
+            <?php
+        }
+		foreach ( $args['options'] as $radio ) {
+			?>
+
+            <div>
+                <label>
+                    <input type="radio" name="SLAR_general_settings[<?php echo $args['name'] ?>]" value="<?php echo $radio['name'] ?>" <?php checked($options[$args['name']] ?? '', $radio['name'], true) ?>>
+                    <?php echo $radio['label'] ?>
+                </label>
+            </div>
+			<?php
+		}
+
 	}
 
 
