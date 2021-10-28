@@ -18,6 +18,12 @@ const config = {
 	module: {
 		rules: [
 			{
+				test: /\.ts$/,
+				use: [
+					'ts-loader',
+				]
+			},
+			{
 				test: /\.js$/,
 				loader: 'babel-loader',
 				options: {
